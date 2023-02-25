@@ -1,12 +1,43 @@
-<!DOCTYPE html><html lang="en"><head>
-  <meta charset="utf-8">
-  <title>Ilhéu Atelier</title>
-  <base href="/">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
-<style>@font-face{font-family:atipland-book;src:local("atipland-book"),url(atipland-book.cedea9a46d57577b.otf) format("truetype")}*{margin:0 auto;box-sizing:border-box;font-family:atipland-book,sans-serif;color:#0000f2}body{background-color:#f6f5ea}</style><link rel="stylesheet" href="styles.fe2209fcd902c687.css" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="styles.fe2209fcd902c687.css"></noscript></head>
-<body>
-  <app-root></app-root>
-<script src="runtime.31022f6d7dafc1c1.js" type="module"></script><script src="polyfills.078f3aefb6bb3da7.js" type="module"></script><script src="main.e3992837750c175f.js" type="module"></script>
+<?php
 
-</body></html>
+    header("Content-Type: application/json");
+
+    require("vendor/autoload.php");
+
+    define("CONFIG", parse_ini_file("models/config-vars.php"));
+
+    define("ROOT",
+        rtrim(
+            str_replace(
+                "\\", "//", dirname($_SERVER["SCRIPT_NAME"])
+            ),
+            "/"
+        )
+    );
+
+    $url_parts = explode("/", $_SERVER["REQUEST_URI"]);
+
+    $controllers = [
+        "accounts-manager",
+        "backoffice",
+        "captcha",
+        "information",
+        "login",
+        "images-manager",
+        "messages-manager",
+        "projects",
+        "projects-manager",
+        "siteImages",
+        "sendEmail"
+    ];
+
+    $controller = $url_parts[1];
+
+    $id = !empty($url_parts[2]) ? $url_parts[2] : "";
+
+    if( !in_array($controller, $controllers) ) {
+        http_response_code(400);
+        die('{"message": "rota inválida"}');
+    }
+
+    require("controllers/" . $controller . ".php");

@@ -28,10 +28,10 @@
             
             $mail->CharSet = 'UTF-8';
             
-            $mail->Host = $MAIL_HOST;
-            $mail->Port = $MAIL_PORT;
-            $mail->Username = $MAIL_USERNAME;
-            $mail->Password = $MAIL_PASS; 
+            $mail->Host = CONFIG['$MAIL_HOST'];
+            $mail->Port = CONFIG['$MAIL_PORT'];
+            $mail->Username = CONFIG['$MAIL_USERNAME'];
+            $mail->Password = CONFIG['$MAIL_PASS']; 
 
             
             $mail->setFrom( $admin[0]["email"], 'Ilhéu Atelier' );
