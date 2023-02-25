@@ -16,6 +16,10 @@
     );
 
     $url_parts = explode("/", $_SERVER["REQUEST_URI"]);
+    var_dump($url_parts[0]);
+    var_dump($url_parts[1]);
+    var_dump($url_parts[2]);
+    var_dump($url_parts[3]);
 
     $controllers = [
         "accounts-manager",
