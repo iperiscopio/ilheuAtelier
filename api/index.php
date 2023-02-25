@@ -4,8 +4,6 @@
 
     require("vendor/autoload.php");
 
-    define("CONFIG", parse_ini_file(".env"));
-
     define("ROOT",
         rtrim(
             str_replace(

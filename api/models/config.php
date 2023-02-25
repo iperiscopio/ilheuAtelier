@@ -5,16 +5,38 @@
     class Config {
 
         protected $db;
+        protected $DB_CONNECTION;
+        protected $DB_HOST;
+        protected $DB_NAME;
+        protected $DB_CHARSET;
+        protected $DB_USER;
+        protected $DB_PASS;
+        protected $SECRET_KEY;
+        protected $MAIL_HOST;
+        protected $MAIL_PORT;
+        protected $MAIL_USERNAME;
+        protected $MAIL_PASS;
 
         public function __construct() {
+            $this->DB_CONNECTION = mysql;
+            $this->DB_HOST = getenv('DB_HOST');
+            $this->DB_NAME = getenv('DB_NAME');
+            $this->DB_CHARSET = getenv('DB_CHARSET');
+            $this->DB_USER = getenv('DB_USER');
+            $this->DB_PASS = getenv('DB_PASS');
+            $this->SECRET_KEY = getenv('SECRET_KEY');
+            $this->MAIL_HOST = getenv('MAIL_HOST');
+            $this->MAIL_PORT = getenv('MAIL_PORT');
+            $this->MAIL_USERNAME = getenv('MAIL_USERNAME');
+            $this->MAIL_PASS = getenv('MAIL_PASS');
             
             $this->db = new PDO( 
-                CONFIG["DB_CONNECTION"] . 
-                ':host=' . CONFIG["DB_HOST"] . 
-                ';dbname='  . CONFIG["DB_NAME"] .
-                ';charset=' . CONFIG["DB_CHARSET"] ,
-                CONFIG["DB_USER"] ,  
-                CONFIG["DB_PASS"]
+                $DB_CONNECTION . 
+                ':host=' . $DB_HOST . 
+                ';dbname='  . $DB_NAME .
+                ';charset=' . $DB_CHARSET ,
+                $DB_USER ,  
+                $DB_PASS
             );
         }
 
@@ -35,7 +57,7 @@
             }
 
             // Token validation
-            $secret = CONFIG["SECRET_KEY"];
+            $secret = $SECRET_KEY;
             
             $isValid = Token::validate($token, $secret);
             
