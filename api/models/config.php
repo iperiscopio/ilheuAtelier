@@ -5,7 +5,7 @@
     class Config {
 
         protected $db;
-        protected $DB_CONNECTION;
+        protected $DB_CONNECTION=mysql;
         protected $DB_HOST;
         protected $DB_NAME;
         protected $DB_CHARSET;
@@ -18,7 +18,6 @@
         protected $MAIL_PASS;
 
         public function __construct() {
-            $this->DB_CONNECTION = mysql;
             $this->DB_HOST = getenv('DB_HOST');
             $this->DB_NAME = getenv('DB_NAME');
             $this->DB_CHARSET = getenv('DB_CHARSET');
