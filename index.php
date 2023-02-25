@@ -35,9 +35,9 @@
         "sendEmail"
     ];
 
-    $controller = $url_parts[1];
+    $controller = $url_parts[0];
 
-    $id = !empty($url_parts[2]) ? $url_parts[2] : "";
+    $id = !empty($url_parts[1]) ? $url_parts[1] : "";
 
     if( !in_array($controller, $controllers) ) {
         http_response_code(400);
