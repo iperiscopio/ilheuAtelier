@@ -16,6 +16,7 @@
     );
 
     $url_parts = explode("/", $_SERVER["REQUEST_URI"]);
+    var_dump($_SERVER["REQUEST_URI"]);
     var_dump($url_parts[0]);
     var_dump($url_parts[1]);
     var_dump($url_parts[2]);
@@ -35,9 +36,9 @@
         "sendEmail"
     ];
 
-    $controller = $url_parts[0];
+    $controller = $url_parts[1];
 
-    $id = !empty($url_parts[1]) ? $url_parts[1] : "";
+    $id = !empty($url_parts[2]) ? $url_parts[2] : "";
 
     if( !in_array($controller, $controllers) ) {
         http_response_code(400);

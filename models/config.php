@@ -1,6 +1,7 @@
 <?php
 
     use ReallySimpleJWT\Token;
+    require("config-vars.php");
 
     class Config {
 
@@ -10,11 +11,11 @@
             
             $this->db = new PDO( 
                 'mysql' . 
-                ':host=' . CONFIG['$DB_HOST'] . 
-                ';dbname='  . CONFIG['$DB_NAME'] .
-                ';charset=' . CONFIG['$DB_CHARSET'] ,
-                CONFIG['$DB_USER'] ,  
-                CONFIG['$DB_PASS']
+                ':host=' . $DB_HOST . 
+                ';dbname='  . $DB_NAME .
+                ';charset=' . $DB_CHARSET ,
+                $DB_USER ,  
+                $DB_PASS
             );
         }
 
