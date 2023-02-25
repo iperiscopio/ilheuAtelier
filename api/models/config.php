@@ -5,7 +5,7 @@
     class Config {
 
         protected $db;
-        protected $DB_CONNECTION=mysql;
+        protected $DB_CONNECTION='mysql';
         protected $DB_HOST;
         protected $DB_NAME;
         protected $DB_CHARSET;
