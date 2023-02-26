@@ -3,7 +3,6 @@
     use ReallySimpleJWT\Token;
 
     require("models/admin.php");
-    include_once("models/config.php");
 
     $model = new Admin();
 
@@ -53,7 +52,7 @@
                 "exp" => time() + (60 * 120) // 2 hours
             ];
 
-            $secret = $SECRET_KEY;
+            $secret = getenv('SECRET_KEY');
 
             $token = Token::customPayload($payload, $secret);
 
