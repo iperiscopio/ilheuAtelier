@@ -5,6 +5,16 @@
     class Config {
 
         protected $db;
+        protected $DB_HOST;
+        protected $DB_NAME;
+        protected $DB_CHARSET;
+        protected $DB_USER;
+        protected $DB_PASS;
+        protected $SECRET_KEY;
+        protected $MAIL_HOST;
+        protected $MAIL_PORT;
+        protected $MAIL_USERNAME;
+        protected $MAIL_PASS;
 
         public function __construct() {
 
@@ -27,8 +37,6 @@
                 $DB_USER ,  
                 $DB_PASS
             );
-
-            var_dump($MAIL_USERNAME);
         }
 
         // admin validation 
