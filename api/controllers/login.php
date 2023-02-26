@@ -3,6 +3,7 @@
     use ReallySimpleJWT\Token;
 
     require("models/admin.php");
+    require("models/config.php");
 
     $model = new Admin();
 
