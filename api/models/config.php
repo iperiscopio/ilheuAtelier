@@ -10,11 +10,6 @@
         protected $DB_CHARSET;
         protected $DB_USER;
         protected $DB_PASS;
-        public $SECRET_KEY;
-        protected $MAIL_HOST;
-        protected $MAIL_PORT;
-        protected $MAIL_USERNAME;
-        protected $MAIL_PASS;
 
         public function __construct() {
 
@@ -23,11 +18,6 @@
             $DB_CHARSET = getenv('DB_CHARSET');
             $DB_USER = getenv('DB_USER');
             $DB_PASS = getenv('DB_PASS');
-            $SECRET_KEY = getenv('SECRET_KEY');
-            $MAIL_HOST = getenv('MAIL_HOST');
-            $MAIL_PORT = getenv('MAIL_PORT');
-            $MAIL_USERNAME = getenv('MAIL_USERNAME');
-            $MAIL_PASS = getenv('MAIL_PASS');
             
             $this->db = new PDO( 
                 'mysql' . 
@@ -56,7 +46,7 @@
             }
 
             // Token validation
-            $secret = $SECRET_KEY;
+            $secret = getenv('SECRET_KEY');;
             
             $isValid = Token::validate($token, $secret);
             
