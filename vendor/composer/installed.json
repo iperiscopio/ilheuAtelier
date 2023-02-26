@@ -1,14 +1,9 @@
 {
-    "_readme": [
-        "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
-        "This file is @generated automatically"
-    ],
-    "content-hash": "0e920fa6309d180c97f187f40ec28c08",
     "packages": [
         {
             "name": "phpmailer/phpmailer",
             "version": "v6.7.1",
+            "version_normalized": "6.7.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPMailer/PHPMailer.git",
@@ -46,7 +41,9 @@
                 "symfony/polyfill-mbstring": "To support UTF-8 if the Mbstring PHP extension is not enabled (^1.2)",
                 "thenetworg/oauth2-azure": "Needed for Microsoft XOAUTH2 authentication"
             },
+            "time": "2022-12-08T13:30:06+00:00",
             "type": "library",
+            "installation-source": "dist",
             "autoload": {
                 "psr-4": {
                     "PHPMailer\\PHPMailer\\": "src/"
@@ -84,11 +81,12 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-12-08T13:30:06+00:00"
+            "install-path": "../phpmailer/phpmailer"
         },
         {
             "name": "rbdwllr/reallysimplejwt",
             "version": "3.1.2",
+            "version_normalized": "3.1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/RobDWaller/ReallySimpleJWT.git",
@@ -112,7 +110,9 @@
                 "roave/backward-compatibility-check": "^3.0",
                 "squizlabs/php_codesniffer": "^3.0"
             },
+            "time": "2021-04-06T16:13:14+00:00",
             "type": "library",
+            "installation-source": "dist",
             "autoload": {
                 "psr-4": {
                     "ReallySimpleJWT\\": "src/"
@@ -141,19 +141,9 @@
                 "issues": "https://github.com/RobDWaller/ReallySimpleJWT/issues",
                 "source": "https://github.com/RobDWaller/ReallySimpleJWT/tree/3.1.2"
             },
-            "time": "2021-04-06T16:13:14+00:00"
+            "install-path": "../rbdwllr/reallysimplejwt"
         }
     ],
-    "packages-dev": [],
-    "aliases": [],
-    "minimum-stability": "stable",
-    "stability-flags": [],
-    "prefer-stable": false,
-    "prefer-lowest": false,
-    "platform": {
-        "ext-gd": " *",
-        "ext-mbstring": "*"
-    },
-    "platform-dev": [],
-    "plugin-api-version": "2.1.0"
+    "dev": true,
+    "dev-package-names": []
 }
