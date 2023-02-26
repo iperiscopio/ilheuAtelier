@@ -14,10 +14,7 @@
     );
 
     $url_parts = explode("/", $_SERVER["REQUEST_URI"]);
-    var_dump($_SERVER["REQUEST_URI"]);
-    var_dump($url_parts[0]);
-    var_dump($url_parts[1]);
-
+    
     $controllers = [
         "accounts-manager",
         "backoffice",
