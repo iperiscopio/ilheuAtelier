@@ -10,7 +10,7 @@
         protected $DB_CHARSET;
         protected $DB_USER;
         protected $DB_PASS;
-        protected $SECRET_KEY;
+        public $SECRET_KEY;
         protected $MAIL_HOST;
         protected $MAIL_PORT;
         protected $MAIL_USERNAME;
