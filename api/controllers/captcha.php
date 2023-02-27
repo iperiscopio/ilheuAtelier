@@ -14,15 +14,12 @@
         if(
             !empty($data) &&
             isset($data["name"]) &&
-            isset($data["title"]) &&
             isset($data["email"]) &&
             isset($data["telephone"]) &&
             isset($data["message"]) &&
             isset($data["captcha"]) &&
             mb_strlen($data["name"]) >= 3 &&
             mb_strlen($data["name"]) <= 255 &&
-            mb_strlen($data["title"]) >= 2 &&
-            mb_strlen($data["title"]) <= 3 &&
             filter_var($data["email"], FILTER_VALIDATE_EMAIL) &&
             mb_strlen($data["telephone"]) >= 3 &&
             mb_strlen($data["telephone"]) <= 25 &&

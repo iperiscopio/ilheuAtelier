@@ -10,7 +10,6 @@
                 SELECT
                     clients.client_id,
                     clients.name,
-                    clients.title,
                     clients.email,
                     clients.telephone,
                     messages.message_id,
@@ -62,13 +61,12 @@
                 // Insert Client Info
                 $query = $this->db->prepare("
                     INSERT INTO clients
-                    (name, title, email, telephone)
-                    VALUES(?, ?, ?, ?)
+                    (name, email, telephone)
+                    VALUES(?, ?, ?)
                 ");
                 
                 $query->execute([
                     $client["name"],
-                    $client["title"],
                     $client["email"],
                     $client["telephone"],
                 ]);

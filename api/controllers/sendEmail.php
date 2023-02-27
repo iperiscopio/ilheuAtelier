@@ -26,7 +26,6 @@
         if( !empty($data) ) {
 
             $data["message_id"] = trim(htmlspecialchars(strip_tags($data["message_id"])));
-            $data["title"] = trim(htmlspecialchars(strip_tags($data["title"])));
             $data["name"] = trim(htmlspecialchars(strip_tags($data["name"])));
             $data["email"] = trim(htmlspecialchars(strip_tags($data["email"])));
             $data["subject"] = trim(htmlspecialchars(strip_tags($data["subject"])));
@@ -53,14 +52,11 @@
 
                 if( 
                     !empty($sanitizedData["message_id"]) &&
-                    !empty($sanitizedData["title"]) &&
                     !empty($sanitizedData["name"]) &&
                     !empty($sanitizedData["email"]) &&
                     !empty($sanitizedData["subject"]) &&
                     !empty($sanitizedData["message"]) &&
                     is_numeric($sanitizedData["message_id"]) &&
-                    mb_strlen($sanitizedData["title"]) >= 2 &&
-                    mb_strlen($sanitizedData["title"]) <= 3 &&
                     mb_strlen($sanitizedData["name"]) >= 3 &&
                     mb_strlen($sanitizedData["name"]) <= 255 &&
                     filter_var($sanitizedData["email"], FILTER_VALIDATE_EMAIL) &&
@@ -80,14 +76,11 @@
 
                     if( 
                         !empty($sanitizedData["message_id"]) &&
-                        !empty($sanitizedData["title"]) &&
                         !empty($sanitizedData["name"]) &&
                         !empty($sanitizedData["email"]) &&
                         !empty($sanitizedData["subject"]) &&
                         !empty($sanitizedData["message"]) &&
                         is_numeric($sanitizedData["message_id"]) &&
-                        mb_strlen($sanitizedData["title"]) >= 2 &&
-                        mb_strlen($sanitizedData["title"]) <= 3 &&
                         mb_strlen($sanitizedData["name"]) >= 3 &&
                         mb_strlen($sanitizedData["name"]) <= 255 &&
                         filter_var($sanitizedData["email"], FILTER_VALIDATE_EMAIL) &&
