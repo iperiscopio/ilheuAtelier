@@ -25,6 +25,7 @@
         "messages-manager",
         "projects",
         "projects-manager",
+        "resources",
         "siteImages",
         "sendEmail"
     ];
