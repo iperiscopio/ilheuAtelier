@@ -19,7 +19,7 @@
 
                 imagecolorallocate($image, 255, 160, 122);
 
-                $font = __DIR__ . "/../../atwriter.ttf";
+                $font = __DIR__ . "/../../target/fonts/atwriter.ttf";
 
                 $black = imagecolorallocate($image, 160, 160, 160);
 
