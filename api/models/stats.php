@@ -16,7 +16,7 @@
 
             $query->execute();
 
-            return $query->fetchAll(PDO::FETCH_ASSOC);
+            return $query->fetchAll( PDO::FETCH_ASSOC );
         }
 
         public function countI() { 
@@ -28,7 +28,7 @@
 
             $query->execute();
 
-            return $query->fetchAll(PDO::FETCH_ASSOC);
+            return $query->fetchAll( PDO::FETCH_ASSOC );
         }
 
         public function countA() { 
@@ -40,7 +40,7 @@
 
             $query->execute();
 
-            return $query->fetchAll(PDO::FETCH_ASSOC);
+            return $query->fetchAll( PDO::FETCH_ASSOC );
         }
 
         public function countC() { 
@@ -52,7 +52,7 @@
 
             $query->execute();
 
-            return $query->fetchAll(PDO::FETCH_ASSOC);
+            return $query->fetchAll( PDO::FETCH_ASSOC );
         }
 
         public function countM() { 
@@ -64,7 +64,7 @@
 
             $query->execute();
 
-            return $query->fetchAll(PDO::FETCH_ASSOC);
+            return $query->fetchAll( PDO::FETCH_ASSOC );
         }
 
 

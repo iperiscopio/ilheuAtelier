@@ -4,8 +4,6 @@
 
     require("vendor/autoload.php");
 
-    define("CONFIG", parse_ini_file(".env"));
-
     define("ROOT",
         rtrim(
             str_replace(
@@ -16,7 +14,7 @@
     );
 
     $url_parts = explode("/", $_SERVER["REQUEST_URI"]);
-
+    
     $controllers = [
         "accounts-manager",
         "backoffice",
@@ -27,7 +25,6 @@
         "messages-manager",
         "projects",
         "projects-manager",
-        "resources",
         "siteImages",
         "sendEmail"
     ];
@@ -36,7 +33,7 @@
 
     $id = !empty($url_parts[3]) ? $url_parts[3] : "";
 
-    if (!in_array($controller, $controllers)) {
+    if( !in_array($controller, $controllers) ) {
         http_response_code(400);
         die('{"message": "rota inválida"}');
     }

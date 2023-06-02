@@ -36,7 +36,7 @@
 
     if( $_SERVER["REQUEST_METHOD"] === "GET" ) {
 
-        $userIp = $_SERVER["REMOTE_ADDR"];
+        $userIp = $_SERVER['HTTP_X_FORWARDED_FOR'];
 
         http_response_code(202);
 
@@ -46,10 +46,9 @@
 
     } else if( $_SERVER["REQUEST_METHOD"] === "POST" ){
 
-        $userIp = $_SERVER["REMOTE_ADDR"];
+        $userIp = $_SERVER['HTTP_X_FORWARDED_FOR'];
 
         $data = json_decode( file_get_contents("php://input"), true );
-        
         
         if( validate( $data ) ) {
 
