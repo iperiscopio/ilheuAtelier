@@ -14,6 +14,9 @@
                     projects.title,
                     projects.location,
                     projects.description,
+                    projects.title_en,
+                    projects.location_en,
+                    projects.description_en,
                     images.project_id AS images,
                     images.image_id,
                     images.image
@@ -25,7 +28,7 @@
 
             $query->execute();
 
-            $results = $query->fetchAll( PDO::FETCH_ASSOC );
+            $results = $query->fetchAll(PDO::FETCH_ASSOC);
 
             $projects = [];
             $projectImages = [];
@@ -39,6 +42,9 @@
                     $projects[$key]["title"] = $value["title"];
                     $projects[$key]["location"] = $value["location"];
                     $projects[$key]["description"] = $value["description"];
+                    $projects[$key]["title_en"] = $value["title_en"];
+                    $projects[$key]["location_en"] = $value["location_en"];
+                    $projects[$key]["description_en"] = $value["description_en"];
                 }
                 if(!empty($value["image"])) {
                     $projects[$key]["images"][] = $value["image"];
@@ -60,6 +66,9 @@
                     projects.title,
                     projects.location,
                     projects.description,
+                    projects.title_en,
+                    projects.location_en,
+                    projects.description_en,
                     images.project_id AS images,
                     images.image_id,
                     images.image
@@ -71,40 +80,47 @@
 
             $query->execute();
 
-            $results = $query->fetchAll( PDO::FETCH_ASSOC );
+            $results = $query->fetchAll(PDO::FETCH_ASSOC);
 
             $projects = [];
             $projectImages = [];
             $key = 0;
 
-            foreach($results as $result => $value){
+            foreach ($results as $result => $value){
 	
-                if(!in_array($value["project_id"], $projectImages)){
+                if (!in_array($value["project_id"], $projectImages)) {
                     ++$key;
                     $projects[$key]["project_id"] = $value["project_id"];
                     $projects[$key]["title"] = $value["title"];
                     $projects[$key]["location"] = $value["location"];
                     $projects[$key]["description"] = $value["description"];
+                    $projects[$key]["title_en"] = $value["title_en"];
+                    $projects[$key]["location_en"] = $value["location_en"];
+                    $projects[$key]["description_en"] = $value["description_en"];
                 }
-                if(!empty($value["image"])) {
+
+                if (!empty($value["image"])) {
                     $projects[$key]["images"][] = $value["image"];
                 }
+
                 $projectImages[] = $value["project_id"];
-                
             }
 
             return $projects;
         }
 
         // GET A SINGLE PROJECT: 
-        public function getProject( $id ) {
+        public function getProject($id) {
 
             $query = $this->db->prepare("
                 SELECT 
-                    projects.project_id,  
+                    projects.project_id, 
                     projects.title,
                     projects.location,
                     projects.description,
+                    projects.title_en,
+                    projects.location_en,
+                    projects.description_en,
                     images.project_id AS images,
                     images.image_id,
                     images.image
@@ -116,43 +132,49 @@
                     project_id = ?    
             ");
 
-            $query->execute([ $id ]);
+            $query->execute([$id]);
 
-            $results = $query->fetchAll( PDO::FETCH_ASSOC );
+            $results = $query->fetchAll(PDO::FETCH_ASSOC);
 
             $project = [];
             $projectImages = [];
             $key = 0;
 
-            foreach($results as $result => $value){
+            foreach ($results as $result => $value) {
 	
-                if(!in_array($value["project_id"], $projectImages)){
+                if (!in_array($value["project_id"], $projectImages)) {
                     $project[$key]["project_id"] = $value["project_id"];
                     $project[$key]["title"] = $value["title"];
                     $project[$key]["location"] = $value["location"];
                     $project[$key]["description"] = $value["description"];
+                    $project[$key]["title_en"] = $value["title_en"];
+                    $project[$key]["location_en"] = $value["location_en"];
+                    $project[$key]["description_en"] = $value["description_en"];
                 }
+
                 $project[$key]["images"][$result] = $value["image"];
                 $projectImages[] = $value["project_id"];
-        
             }
 
             return $project;
         }
 
         // POST A PROJECT: 
-        public function createProject( $data ) {
+        public function createProject($data) {
 
             $query = $this->db->prepare("
                 INSERT INTO projects
-                (title, description, location)
-                VALUES(?, ?, ?) 
+                (title, description, location, title_en, description_en, location_en)
+                VALUES(?, ?, ?, ?, ?, ?) 
             ");
 
             $query->execute([
                 $data["title"],
                 $data["description"],
-                $data["location"]
+                $data["location"],
+                $data["title_en"],
+                $data["description_en"],
+                $data["location_en"],
             ]);
 
             
@@ -179,7 +201,7 @@
         }
 
         // UPDATE A PROJECT: 
-        public function updateProject( $id, $data ) {
+        public function updateProject($id, $data) {
 
             // query to update projects table
             $query = $this->db->prepare("
@@ -188,7 +210,10 @@
                 SET
                     title = ?,
                     location = ?,
-                    description = ?
+                    description = ?,
+                    title_en = ?,
+                    location_en = ?,
+                    description_en = ?,
                 WHERE
                     project_id = ?
 
@@ -198,12 +223,15 @@
                 $data["title"],
                 $data["location"],
                 $data["description"],
+                $data["title_en"],
+                $data["description_en"],
+                $data["location_en"],
                 $id
             ]);
 
-            if(!empty($data["images"])) {
+            if (!empty($data["images"])) {
 
-                foreach( $data["images"] as $image) {
+                foreach ($data["images"] as $image) {
                     $query = $this->db->prepare("
                         INSERT INTO images
                         (project_id, image)
@@ -218,35 +246,28 @@
             }
             
             return $updatedProject;
-
-
-
-
         }
 
         // DELETE A PROJECT: 
-        public function deleteProject( $id ) {
+        public function deleteProject($id) {
 
             $query = $this->db->prepare("
                 DELETE FROM projects
                 WHERE project_id = ?
             ");
 
-            $deletedProject = $query->execute([ $id ]);
+            $deletedProject = $query->execute([$id]);
 
-            if( $deletedProject ) {
+            if ($deletedProject) {
 
-                    $query = $this->db->prepare("
-                        DELETE FROM images
-                        WHERE project_id = ?
-                    ");
+                $query = $this->db->prepare("
+                    DELETE FROM images
+                    WHERE project_id = ?
+                ");
 
-                    $query->execute([ $id ]);
-                
+                $query->execute([$id]);
             }
 
             return $deletedProject;
-
-
         }
     } 

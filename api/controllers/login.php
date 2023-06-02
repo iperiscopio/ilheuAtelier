@@ -52,7 +52,7 @@
                 "exp" => time() + (60 * 120) // 2 hours
             ];
 
-            $secret = getenv('SECRET_KEY');
+            $secret = CONFIG["SECRET_KEY"];
 
             $token = Token::customPayload($payload, $secret);
 

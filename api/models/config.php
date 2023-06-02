@@ -5,27 +5,16 @@
     class Config {
 
         protected $db;
-        protected $DB_HOST;
-        protected $DB_NAME;
-        protected $DB_CHARSET;
-        protected $DB_USER;
-        protected $DB_PASS;
 
         public function __construct() {
-
-            $DB_HOST = getenv('DB_HOST');
-            $DB_NAME = getenv('DB_NAME');
-            $DB_CHARSET = getenv('DB_CHARSET');
-            $DB_USER = getenv('DB_USER');
-            $DB_PASS = getenv('DB_PASS');
             
             $this->db = new PDO( 
-                'mysql' . 
-                ':host=' . $DB_HOST . 
-                ';dbname='  . $DB_NAME .
-                ';charset=' . $DB_CHARSET ,
-                $DB_USER ,  
-                $DB_PASS
+                CONFIG["DB_CONNECTION"] . 
+                ':host=' . CONFIG["DB_HOST"] . 
+                ';dbname='  . CONFIG["DB_NAME"] .
+                ';charset=' . CONFIG["DB_CHARSET"] ,
+                CONFIG["ROOT"] ,  
+                CONFIG["PASS"]
             );
         }
 
@@ -46,7 +35,7 @@
             }
 
             // Token validation
-            $secret = getenv('SECRET_KEY');;
+            $secret = CONFIG["SECRET_KEY"];
             
             $isValid = Token::validate($token, $secret);
             

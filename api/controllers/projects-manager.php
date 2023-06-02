@@ -25,15 +25,17 @@
         if( !empty($data) ) {
             $data["title"] = trim(htmlspecialchars(strip_tags($data["title"]))); 
             $data["location"] = trim(htmlspecialchars(strip_tags($data["location"]))); 
-            $data["description"] = trim($data["description"]); // <-- removed 
+            $data["description"] = trim($data["description"]); 
+            $data["title_en"] = trim(htmlspecialchars(strip_tags($data["title_en"]))); 
+            $data["location_en"] = trim(htmlspecialchars(strip_tags($data["location_en"]))); 
+            $data["description_en"] = trim($data["description_en"]); 
+            // <-- removed 
             // htmlspecialchars(strip_tags($data["description"])) in order to CKEditor 
             // could save in db html characters and tags, as I'm returning the data bellow
             // for the next functions
 
             for( $i = 0; $i < count($data["images"]); $i++ ) {
-
                 $sanitize = trim(htmlspecialchars(strip_tags($data["images"][$i])));
-
             } 
             
             return $data;
@@ -41,55 +43,50 @@
         return false;
     }
 
+    function sanitizeValues() {
+        return (isset($sanitizedData["title"]) &&
+                isset($sanitizedData["location"]) &&
+                isset($sanitizedData["description"]) &&
+                isset($sanitizedData["title_en"]) &&
+                isset($sanitizedData["location_en"]) &&
+                isset($sanitizedData["description_en"]) &&
+                mb_strlen($sanitizedData["title"]) >= 3 &&
+                mb_strlen($sanitizedData["title"]) <= 250 &&
+                mb_strlen($sanitizedData["location"]) >= 3 &&
+                mb_strlen($sanitizedData["location"]) <= 120 &&
+                mb_strlen($sanitizedData["description"]) >= 10 &&
+                mb_strlen($sanitizedData["description"]) <= 65535 &&
+                mb_strlen($sanitizedData["title_en"]) >= 3 &&
+                mb_strlen($sanitizedData["title_en"]) <= 250 &&
+                mb_strlen($sanitizedData["location_en"]) >= 3 &&
+                mb_strlen($sanitizedData["location_en"]) <= 120 &&
+                mb_strlen($sanitizedData["description_en"]) >= 10 &&
+                mb_strlen($sanitizedData["description_en"]) <= 65535);
+    }
+
     // Validate:
     function validator($sanitizedData) {
 
-        if( !empty($sanitizedData) ) {
+        if (!empty($sanitizedData)) {
 
-            if( empty($sanitizedData["images"]) ) {
-                if( 
-                    isset($sanitizedData["title"]) &&
-                    isset($sanitizedData["location"]) &&
-                    isset($sanitizedData["description"]) &&
-                    mb_strlen($sanitizedData["title"]) >= 3 &&
-                    mb_strlen($sanitizedData["title"]) <= 250 &&
-                    mb_strlen($sanitizedData["location"]) >= 3 &&
-                    mb_strlen($sanitizedData["location"]) <= 120 &&
-                    mb_strlen($sanitizedData["description"]) >= 10 &&
-                    mb_strlen($sanitizedData["description"]) <= 65535
-                ) {
-                    
-                    return true;
-                }
+            if (empty($sanitizedData["images"])) {
+                
+                return sanitizeValues();
             } else {
 
-                for( $i = 0; $i < count($sanitizedData["images"]); $i++ ) {
+                for ($i = 0; $i < count($sanitizedData["images"]); $i++) {
 
                     $size = strlen($sanitizedData["images"][$i]);
 
-                    if( 
-                        isset($sanitizedData["title"]) &&
-                        isset($sanitizedData["location"]) &&
-                        isset($sanitizedData["description"]) &&
-                        mb_strlen($sanitizedData["title"]) >= 3 &&
-                        mb_strlen($sanitizedData["title"]) <= 250 &&
-                        mb_strlen($sanitizedData["location"]) >= 3 &&
-                        mb_strlen($sanitizedData["location"]) <= 120 &&
-                        mb_strlen($sanitizedData["description"]) >= 10 &&
-                        mb_strlen($sanitizedData["description"]) <= 65535 &&
-                        $size > 0 &&
-                        $size < 10000000
-                    ) {
+                    if (sanitizeValues() && $size > 0 && $size < 10000000) {
                         
                         return true;
                     } 
-                    
                 }
             } 
-            
-        }   
-        return false;
+        }  
 
+        return false;
     }
 
     // Transform images data:
