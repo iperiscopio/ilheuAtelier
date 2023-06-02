@@ -7,9 +7,9 @@
         public function getResource($lang) {
             var_dump(__DIR__);
             if ($lang === 'pt-PT') {
-                return parse_ini_file(__DIR__ . '/../../target/resources/Resources_PT.ini');
+                return parse_ini_file(__DIR__ . '/../Resources_PT.ini');
             } else if ($lang === 'en-GB') {
-                return parse_ini_file(__DIR__ . '/../../target/resources/Resources_EN.ini');
+                return parse_ini_file(__DIR__ . '/../Resources_EN.ini');
             }
         }
     }
