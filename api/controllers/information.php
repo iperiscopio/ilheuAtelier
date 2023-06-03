@@ -30,10 +30,13 @@
             if( 
                 !empty($data["title"]) &&
                 !empty($data["info"]) &&
+                !empty($data["info_en"]) &&
                 mb_strlen($data["title"]) >= 3 &&
                 mb_strlen($data["title"]) <= 120 &&
                 mb_strlen($data["info"]) >= 3 &&
-                mb_strlen($data["info"]) <= 65535
+                mb_strlen($data["info"]) <= 65535 &&
+                mb_strlen($data["info_en"]) >= 3 &&
+                mb_strlen($data["info_en"]) <= 65535
             ) {
                 return true;
             }

@@ -36,13 +36,14 @@
 
             $query = $this->db->prepare("
                 INSERT INTO information
-                (title, info)
-                VALUES(?, ?)
+                (title, info, info_en)
+                VALUES(?, ?, ?)
             ");
 
             $query->execute([
                 $info["title"],
-                $info["info"]
+                $info["info"],
+                $info["info_en"]
             ]);
 
             return $this->db->lastInsertId();
@@ -55,7 +56,8 @@
                 UPDATE information
                 SET 
                     title = ?,
-                    info = ?
+                    info = ?,
+                    info_en = ?
                 WHERE
                     info_id = ?
             ");
@@ -63,6 +65,7 @@
             return $query->execute([
                 $info["title"],
                 $info["info"],
+                $info["info_en"],
                 $id
             ]);
 

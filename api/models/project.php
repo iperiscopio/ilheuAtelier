@@ -14,6 +14,9 @@
                     projects.title,
                     projects.location,
                     projects.description,
+                    projects.title_en,
+                    projects.location_en,
+                    projects.description_en,
                     images.project_id AS images,
                     images.image_id,
                     images.image
@@ -39,6 +42,9 @@
                     $projects[$key]["title"] = $value["title"];
                     $projects[$key]["location"] = $value["location"];
                     $projects[$key]["description"] = $value["description"];
+                    $projects[$key]["title_en"] = $value["title_en"];
+                    $projects[$key]["location_en"] = $value["location_en"];
+                    $projects[$key]["description_en"] = $value["description_en"];
                 }
                 if(!empty($value["image"])) {
                     $projects[$key]["images"][] = $value["image"];
@@ -60,6 +66,9 @@
                     projects.title,
                     projects.location,
                     projects.description,
+                    projects.title_en,
+                    projects.location_en,
+                    projects.description_en,
                     images.project_id AS images,
                     images.image_id,
                     images.image
@@ -85,6 +94,9 @@
                     $projects[$key]["title"] = $value["title"];
                     $projects[$key]["location"] = $value["location"];
                     $projects[$key]["description"] = $value["description"];
+                    $projects[$key]["title_en"] = $value["title_en"];
+                    $projects[$key]["location_en"] = $value["location_en"];
+                    $projects[$key]["description_en"] = $value["description_en"];
                 }
                 if(!empty($value["image"])) {
                     $projects[$key]["images"][] = $value["image"];
@@ -105,6 +117,9 @@
                     projects.title,
                     projects.location,
                     projects.description,
+                    projects.title_en,
+                    projects.location_en,
+                    projects.description_en,
                     images.project_id AS images,
                     images.image_id,
                     images.image
@@ -131,6 +146,9 @@
                     $project[$key]["title"] = $value["title"];
                     $project[$key]["location"] = $value["location"];
                     $project[$key]["description"] = $value["description"];
+                    $project[$key]["title_en"] = $value["title_en"];
+                    $project[$key]["location_en"] = $value["location_en"];
+                    $project[$key]["description_en"] = $value["description_en"];
                 }
                 $project[$key]["images"][$result] = $value["image"];
                 $projectImages[] = $value["project_id"];
@@ -145,14 +163,17 @@
 
             $query = $this->db->prepare("
                 INSERT INTO projects
-                (title, description, location)
-                VALUES(?, ?, ?) 
+                (title, description, location, title_en, description_en, location_en)
+                VALUES(?, ?, ?, ?, ?, ?)
             ");
 
             $query->execute([
                 $data["title"],
                 $data["description"],
-                $data["location"]
+                $data["location"],
+                $data["title_en"],
+                $data["description_en"],
+                $data["location_en"]
             ]);
 
             
@@ -188,7 +209,10 @@
                 SET
                     title = ?,
                     location = ?,
-                    description = ?
+                    description = ?,
+                    title_en = ?,
+                    location_en = ?,
+                    description_en = ?
                 WHERE
                     project_id = ?
 
@@ -198,6 +222,9 @@
                 $data["title"],
                 $data["location"],
                 $data["description"],
+                $data["title_en"],
+                $data["description_en"],
+                $data["location_en"],
                 $id
             ]);
 
