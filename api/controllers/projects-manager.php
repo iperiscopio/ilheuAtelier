@@ -106,26 +106,29 @@
             // "svg" => "image/svg+xml" <-- removed because PHP MIME TYPE returned "image/svg" instead of "image/svg+xml"
         ];
 
-        for ($i = 0; $i < count($sanitizedData["images"]); $i++) {
+        if (!empty($sanitizedData["images"])) {
 
-            $decoded_image = base64_decode($sanitizedData["images"][$i]);
+            for ($i = 0; $i < count($sanitizedData["images"]); $i++) {
 
-            $finfo = new finfo(FILEINFO_MIME_TYPE);
+                $decoded_image = base64_decode($sanitizedData["images"][$i]);
 
-            $detected_format = $finfo->buffer($decoded_image);
+                $finfo = new finfo(FILEINFO_MIME_TYPE);
 
-            if(in_array($detected_format, $allowed_files_formats)) {
+                $detected_format = $finfo->buffer($decoded_image);
 
-                $filename = str_replace(" ", "_", $sanitizedData["title"]) . "_" . bin2hex(random_bytes(4));
-                
-                $extension = "." . array_search($detected_format, $allowed_files_formats);
+                if(in_array($detected_format, $allowed_files_formats)) {
 
-                $file_dir = $target_dir . $filename . $extension;
+                    $filename = str_replace(" ", "_", $sanitizedData["title"]) . "_" . bin2hex(random_bytes(4));
+                    
+                    $extension = "." . array_search($detected_format, $allowed_files_formats);
 
-                file_put_contents(".." . $file_dir, $decoded_image);
-                
+                    $file_dir = $target_dir . $filename . $extension;
+
+                    file_put_contents(".." . $file_dir, $decoded_image);
+                    
+                }
+                $sanitizedData["images"][$i] = $file_dir;
             }
-            $sanitizedData["images"][$i] = $file_dir;
         }
         
         return $sanitizedData;
@@ -137,12 +140,10 @@
         http_response_code(202);
         echo json_encode( $model->getAllProjects() );
 
-
-
-
     } elseif ($_SERVER["REQUEST_METHOD"] === "POST") { 
 
         $data = json_decode( file_get_contents("php://input"), TRUE );
+        var_dump($data);
 
         $sanitizedData = sanitize($data);
         $transformedData = imageTransformation($sanitizedData);
@@ -160,7 +161,7 @@
             die('{"message": "400 Bad Request"}');
         }
 
-    } elseif($_SERVER["REQUEST_METHOD"] === "PUT") { 
+    } elseif ($_SERVER["REQUEST_METHOD"] === "PUT") { 
 
         $data = json_decode(file_get_contents("php://input"), TRUE);
         
@@ -183,9 +184,7 @@
                 http_response_code(404);
                 die('{"message": "404 Not Found"}');
             }
-            
-            
-    
+ 
         } else {
             
             http_response_code(400);
