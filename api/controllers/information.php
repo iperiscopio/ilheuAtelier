@@ -7,11 +7,11 @@
     $model = new Info();
 
     // Admin authentication through JWT
-    if( in_array($_SERVER["REQUEST_METHOD"], ["POST", "PUT", "DELETE"]) ) {
+    if (in_array($_SERVER["REQUEST_METHOD"], ["POST", "PUT", "DELETE"])) {
         
         $adminId = $model->routeRequireValidation();
 
-        if( empty( $adminId ) ) {
+        if (empty($adminId)) {
             http_response_code(401);
             return '{"message":"Wrong or missing Auth Token"}';
         } 
@@ -19,11 +19,11 @@
     }
 
     // User data validation
-    function validate( $data ) {
+    function validate($data) {
 
-        if( !empty($data) ) {
+        if (!empty($data)) {
 
-            foreach( $data as $key=>$value ) {
+            foreach ($data as $key=>$value) {
                 $data[$key] = trim(htmlspecialchars(strip_tags($value)));
             }
 
@@ -46,45 +46,39 @@
         return false;
     }
 
-    if( $_SERVER["REQUEST_METHOD"] === "GET" ) {
+    if ($_SERVER["REQUEST_METHOD"] === "GET") {
 
-        if( !empty( $id ) && !is_numeric( $id ) ) {
+        if (!empty($id) && !is_numeric($id)) {
 
             http_response_code(400);
             die('{"message": "400 Bad Request"}');
-            
 
-        } else if( !empty($id) && is_numeric( $id ) ) {
+        } elseif (!empty($id) && is_numeric($id)) {
 
-            $info = $model->getInfo( $id );
+            $info = $model->getInfo($id);
         
-            if( !$info ){
+            if (!$info){
                 
                 http_response_code(404);
                 die('{"message": "404 Not Found"}');
-                
             }
 
             http_response_code(202);
             echo json_encode( $info );
-            
 
         } else {
 
             http_response_code(202);
             echo json_encode($model->getAllInfo());
-
         }
 
-        
-
-    } elseif ( $_SERVER["REQUEST_METHOD"] === "POST" ) {
+    } elseif ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         $data = json_decode(file_get_contents("php://input"), TRUE);
 
-        if( validate( $data ) ) {
+        if (validate($data)) {
 
-            $newInfo = $model->postInfo( $data );
+            $newInfo = $model->postInfo($data);
 
             http_response_code(202);
             die('{"message": "Information added with success"}');
@@ -93,70 +87,57 @@
                 
             http_response_code(400);
             die('{"message": "400 Bad Request"}');
-
         }
 
-        
-
-    } elseif ( $_SERVER["REQUEST_METHOD"] === "PUT" ) {
+    } elseif ($_SERVER["REQUEST_METHOD"] === "PUT") {
 
         $data = json_decode(file_get_contents("php://input"), TRUE);
+        var_dump($data);
 
-        if( !empty( $id ) && validate( $data ) ) {
+        if (!empty($id) && validate($data)) {
 
-            $updatedInfo = $model->updateInfo( $id, $data );
+            $updatedInfo = $model->updateInfo($id, $data);
 
-            if( $updatedInfo ) {
+            if ($updatedInfo) {
 
                 http_response_code(202);
-
                 die('{"message": "Information updated with success"}');
 
             } else {
 
                 http_response_code(404);
-
                 die('{"message": "404 Not Found"}');
             }
-
-            
 
         } else {
 
             http_response_code(400);
-
             die('{"message": "400 Bad Request"}');
-
         }
 
-
-    } elseif ( $_SERVER["REQUEST_METHOD"] === "DELETE" ) {
+    } elseif ($_SERVER["REQUEST_METHOD"] === "DELETE") {
 
         $data = json_decode(file_get_contents("php://input"), TRUE);
 
-        if( !empty( $id ) && is_numeric( $id ) ) {
+        if (!empty($id) && is_numeric($id)) {
 
-            $deletedInfo = $model->deleteInfo( $id );
+            $deletedInfo = $model->deleteInfo($id);
 
-            if( $deletedInfo ) {
+            if ($deletedInfo) {
 
                 http_response_code(202);
-
                 die('{"message": "Information deleted with success"}');
 
             } else {
 
                 http_response_code(404);
-
                 die('{"message": "404 Not Found"}');
             }
 
         } else {
 
             http_response_code(400);
-
             die('{"message": "400 Bad Request"}');
-
         }
 
 

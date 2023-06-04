@@ -7,11 +7,11 @@
     $model = new Project();
 
     // admin authentication through JWT
-    if( in_array($_SERVER["REQUEST_METHOD"], ["GET", "POST", "PUT", "DELETE"]) ) {
+    if (in_array($_SERVER["REQUEST_METHOD"], ["GET", "POST", "PUT", "DELETE"])) {
         
         $adminId = $model->routeRequireValidation();
 
-        if( empty( $adminId ) ) {
+        if (empty($adminId)) {
             http_response_code(401);
             die('{"message":"Wrong or missing Auth Token"}');
         } 
@@ -22,7 +22,7 @@
      // Sanitize:
      function sanitize($data) {
 
-        if( !empty($data) ) {
+        if (!empty($data)) {
             $data["title"] = trim(htmlspecialchars(strip_tags($data["title"]))); 
             $data["location"] = trim(htmlspecialchars(strip_tags($data["location"]))); 
             $data["description"] = trim($data["description"]);
@@ -37,7 +37,6 @@
             for( $i = 0; $i < count($data["images"]); $i++ ) {
 
                 $sanitize = trim(htmlspecialchars(strip_tags($data["images"][$i])));
-
             } 
             
             return $data;
@@ -46,30 +45,32 @@
     }
 
     function sanitizeValues() {
-        return (isset($sanitizedData["title"]) &&
-                isset($sanitizedData["location"]) &&
-                isset($sanitizedData["description"]) &&
-                isset($sanitizedData["title_en"]) &&
-                isset($sanitizedData["location_en"]) &&
-                isset($sanitizedData["description_en"]) &&
-                mb_strlen($sanitizedData["title"]) >= 3 &&
-                mb_strlen($sanitizedData["title"]) <= 250 &&
-                mb_strlen($sanitizedData["location"]) >= 3 &&
-                mb_strlen($sanitizedData["location"]) <= 120 &&
-                mb_strlen($sanitizedData["description"]) >= 10 &&
-                mb_strlen($sanitizedData["description"]) <= 65535 &&
-                mb_strlen($sanitizedData["title_en"]) >= 3 &&
-                mb_strlen($sanitizedData["title_en"]) <= 250 &&
-                mb_strlen($sanitizedData["location_en"]) >= 3 &&
-                mb_strlen($sanitizedData["location_en"]) <= 120 &&
-                mb_strlen($sanitizedData["description_en"]) >= 10 &&
-                mb_strlen($sanitizedData["description_en"]) <= 65535);
+        return (
+            isset($sanitizedData["title"]) &&
+            isset($sanitizedData["location"]) &&
+            isset($sanitizedData["description"]) &&
+            isset($sanitizedData["title_en"]) &&
+            isset($sanitizedData["location_en"]) &&
+            isset($sanitizedData["description_en"]) &&
+            mb_strlen($sanitizedData["title"]) >= 3 &&
+            mb_strlen($sanitizedData["title"]) <= 250 &&
+            mb_strlen($sanitizedData["location"]) >= 3 &&
+            mb_strlen($sanitizedData["location"]) <= 120 &&
+            mb_strlen($sanitizedData["description"]) >= 10 &&
+            mb_strlen($sanitizedData["description"]) <= 65535 &&
+            mb_strlen($sanitizedData["title_en"]) >= 3 &&
+            mb_strlen($sanitizedData["title_en"]) <= 250 &&
+            mb_strlen($sanitizedData["location_en"]) >= 3 &&
+            mb_strlen($sanitizedData["location_en"]) <= 120 &&
+            mb_strlen($sanitizedData["description_en"]) >= 10 &&
+            mb_strlen($sanitizedData["description_en"]) <= 65535
+        );
     }
 
     // Validate:
     function validator($sanitizedData) {
 
-        if( !empty($sanitizedData) ) {
+        if (!empty($sanitizedData)) {
             
             if (empty($sanitizedData["images"])) {
                 
@@ -105,7 +106,7 @@
             // "svg" => "image/svg+xml" <-- removed because PHP MIME TYPE returned "image/svg" instead of "image/svg+xml"
         ];
 
-        for( $i = 0; $i < count($sanitizedData["images"]); $i++ ) {
+        for ($i = 0; $i < count($sanitizedData["images"]); $i++) {
 
             $decoded_image = base64_decode($sanitizedData["images"][$i]);
 
@@ -131,7 +132,7 @@
     }
 
 
-    if($_SERVER["REQUEST_METHOD"] === "GET") {
+    if ($_SERVER["REQUEST_METHOD"] === "GET") {
 
         http_response_code(202);
         echo json_encode( $model->getAllProjects() );
@@ -139,14 +140,14 @@
 
 
 
-    } elseif($_SERVER["REQUEST_METHOD"] === "POST") { 
+    } elseif ($_SERVER["REQUEST_METHOD"] === "POST") { 
 
         $data = json_decode( file_get_contents("php://input"), TRUE );
 
         $sanitizedData = sanitize($data);
         $transformedData = imageTransformation($sanitizedData);
         
-        if( validator($sanitizedData) ) {
+        if (validator($sanitizedData)) {
             
             $model->createProject( $transformedData );
     
@@ -159,23 +160,20 @@
             die('{"message": "400 Bad Request"}');
         }
 
+    } elseif($_SERVER["REQUEST_METHOD"] === "PUT") { 
 
-
-        
-    } else if($_SERVER["REQUEST_METHOD"] === "PUT") { 
-
-        $data = json_decode( file_get_contents("php://input"), TRUE );
+        $data = json_decode(file_get_contents("php://input"), TRUE);
         
         $sanitizedData = sanitize($data);
         $transformedData = imageTransformation($sanitizedData);
 
-        if( 
+        if ( 
             !empty($id) &&
             validator($sanitizedData)
         ) {
-            $updateProject = $model->updateProject( $id, $transformedData );
+            $updateProject = $model->updateProject($id, $transformedData);
             
-            if( $updateProject ) {
+            if ($updateProject) {
                 
                 http_response_code(202);
                 die('{"message": "Updated project ' . $id . ', ' . $transformedData["title"] . ' with success"}');
@@ -194,18 +192,15 @@
             die('{"message": "400 Bad Request"}');
         }
 
+    } elseif ($_SERVER["REQUEST_METHOD"] === "DELETE") { 
 
-
-
-    } else if($_SERVER["REQUEST_METHOD"] === "DELETE") { 
-
-        $data = json_decode( file_get_contents("php://input"), TRUE );
+        $data = json_decode(file_get_contents("php://input"), TRUE);
         
-        if( !empty( $id ) && is_numeric( $id ) ) {
+        if( !empty($id) && is_numeric($id)) {
 
             $removeProject = $model->deleteProject($id);
             
-            if( $removeProject ) { 
+            if ($removeProject) { 
 
                 http_response_code(202);
                 die('{"message": "Deleted Project nº: ' . $id . ' ' . $data["title"] .'"}');
@@ -214,22 +209,18 @@
 
                 http_response_code(404);
                 die('{"message": "404 Not Found"}');
-
             }
             
         } else {
 
              http_response_code(400);
             die('{"message": "400 Bad Request"}');
-
         }
-
-        
+ 
     } else {
 
         http_response_code(405);
         die('{"message": "Method Not Allowed"}');
-
     }
 
 
