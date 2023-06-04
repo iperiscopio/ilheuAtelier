@@ -74,7 +74,7 @@
 
     } elseif ($_SERVER["REQUEST_METHOD"] === "POST") {
 
-        $data = json_decode( file_get_contents("php://input"), true );
+        $data = json_decode(file_get_contents("php://input"), true);
 
         if (validate($data)) {
 
@@ -91,8 +91,7 @@
 
     } elseif ($_SERVER["REQUEST_METHOD"] === "PUT") {
 
-        $data = json_decode( file_get_contents("php://input"), true );
-        var_dump($data);
+        $data = json_decode(file_get_contents("php://input"), true);
 
         if (!empty($id) && validate($data)) {
 

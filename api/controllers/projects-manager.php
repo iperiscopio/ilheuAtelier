@@ -33,11 +33,13 @@
             // htmlspecialchars(strip_tags($data["description"])) in order to CKEditor 
             // could save in db html characters and tags, as I'm returning the data bellow
             // for the next functions
+            if (!empty($data["images"])) {
+                for( $i = 0; $i < count($data["images"]); $i++ ) {
+    
+                    $sanitize = trim(htmlspecialchars(strip_tags($data["images"][$i])));
+                } 
+            }
 
-            for( $i = 0; $i < count($data["images"]); $i++ ) {
-
-                $sanitize = trim(htmlspecialchars(strip_tags($data["images"][$i])));
-            } 
             
             return $data;
         }
@@ -138,19 +140,18 @@
     if ($_SERVER["REQUEST_METHOD"] === "GET") {
 
         http_response_code(202);
-        echo json_encode( $model->getAllProjects() );
+        echo json_encode($model->getAllProjects());
 
     } elseif ($_SERVER["REQUEST_METHOD"] === "POST") { 
 
-        $data = json_decode( file_get_contents("php://input"), TRUE );
-        var_dump($data);
+        $data = json_decode(file_get_contents("php://input"), TRUE);
 
         $sanitizedData = sanitize($data);
         $transformedData = imageTransformation($sanitizedData);
         
         if (validator($sanitizedData)) {
             
-            $model->createProject( $transformedData );
+            $model->createProject($transformedData);
     
             http_response_code(202);
             die('{"message": "Uploaded project ' . $transformedData["title"] . ' with success"}');
