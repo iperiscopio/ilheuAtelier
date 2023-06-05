@@ -46,26 +46,27 @@
         return false;
     }
 
-    function sanitizeValues() {
+    function sanitizeValues($dataValues) {
+        var_dump($dataValues);
         return (
-            isset($sanitizedData["title"]) &&
-            isset($sanitizedData["location"]) &&
-            isset($sanitizedData["description"]) &&
-            isset($sanitizedData["title_en"]) &&
-            isset($sanitizedData["location_en"]) &&
-            isset($sanitizedData["description_en"]) &&
-            mb_strlen($sanitizedData["title"]) >= 3 &&
-            mb_strlen($sanitizedData["title"]) <= 250 &&
-            mb_strlen($sanitizedData["location"]) >= 3 &&
-            mb_strlen($sanitizedData["location"]) <= 120 &&
-            mb_strlen($sanitizedData["description"]) >= 10 &&
-            mb_strlen($sanitizedData["description"]) <= 65535 &&
-            mb_strlen($sanitizedData["title_en"]) >= 3 &&
-            mb_strlen($sanitizedData["title_en"]) <= 250 &&
-            mb_strlen($sanitizedData["location_en"]) >= 3 &&
-            mb_strlen($sanitizedData["location_en"]) <= 120 &&
-            mb_strlen($sanitizedData["description_en"]) >= 10 &&
-            mb_strlen($sanitizedData["description_en"]) <= 65535
+            isset($dataValues["title"]) &&
+            isset($dataValues["location"]) &&
+            isset($dataValues["description"]) &&
+            isset($dataValues["title_en"]) &&
+            isset($dataValues["location_en"]) &&
+            isset($dataValues["description_en"]) &&
+            mb_strlen($dataValues["title"]) >= 3 &&
+            mb_strlen($dataValues["title"]) <= 250 &&
+            mb_strlen($dataValues["location"]) >= 3 &&
+            mb_strlen($dataValues["location"]) <= 120 &&
+            mb_strlen($dataValues["description"]) >= 10 &&
+            mb_strlen($dataValues["description"]) <= 65535 &&
+            mb_strlen($dataValues["title_en"]) >= 3 &&
+            mb_strlen($dataValues["title_en"]) <= 250 &&
+            mb_strlen($dataValues["location_en"]) >= 3 &&
+            mb_strlen($dataValues["location_en"]) <= 120 &&
+            mb_strlen($dataValues["description_en"]) >= 10 &&
+            mb_strlen($dataValues["description_en"]) <= 65535
         );
     }
 
@@ -76,14 +77,14 @@
             
             if (empty($sanitizedData["images"])) {
                 
-                return sanitizeValues();
+                return sanitizeValues($sanitizedData);
             } else {
 
                 for ($i = 0; $i < count($sanitizedData["images"]); $i++) {
 
                     $size = strlen($sanitizedData["images"][$i]);
 
-                    if (sanitizeValues() && $size > 0 && $size < 10000000) {
+                    if (sanitizeValues($sanitizedData) && $size > 0 && $size < 10000000) {
                         
                         return true;
                     } 
@@ -145,6 +146,7 @@
     } elseif ($_SERVER["REQUEST_METHOD"] === "POST") { 
 
         $data = json_decode(file_get_contents("php://input"), TRUE);
+        var_dump($data);
 
         $sanitizedData = sanitize($data);
         $transformedData = imageTransformation($sanitizedData);
