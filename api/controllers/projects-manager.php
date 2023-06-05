@@ -47,7 +47,6 @@
     }
 
     function sanitizeValues($dataValues) {
-        var_dump($dataValues);
         return (
             isset($dataValues["title"]) &&
             isset($dataValues["location"]) &&
@@ -146,7 +145,6 @@
     } elseif ($_SERVER["REQUEST_METHOD"] === "POST") { 
 
         $data = json_decode(file_get_contents("php://input"), TRUE);
-        var_dump($data);
 
         $sanitizedData = sanitize($data);
         $transformedData = imageTransformation($sanitizedData);

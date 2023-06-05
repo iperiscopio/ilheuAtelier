@@ -9,11 +9,11 @@
     $findAdmin = new Admin();
 
     // Admin authentication through JWT
-    if( in_array($_SERVER["REQUEST_METHOD"], ["POST"]) ) {
+    if (in_array($_SERVER["REQUEST_METHOD"], ["POST"])) {
         
         $adminId = $model->routeRequireValidation();
 
-        if( empty( $adminId ) ) {
+        if (empty($adminId)) {
             http_response_code(401);
             return '{"message":"Wrong or missing Auth Token"}';
         } 
@@ -21,9 +21,9 @@
     }
 
     // Email sanitization from admin to client 
-    function sanitize( $data ) {
+    function sanitize($data) {
 
-        if( !empty($data) ) {
+        if (!empty($data)) {
 
             $data["message_id"] = trim(htmlspecialchars(strip_tags($data["message_id"])));
             $data["name"] = trim(htmlspecialchars(strip_tags($data["name"])));
@@ -44,13 +44,13 @@
     }
 
     // Email validation from admin to client 
-    function validate( $sanitizedData ) {
+    function validate($sanitizedData) {
 
-        if( !empty($sanitizedData) ) {
+        if (!empty($sanitizedData)) {
 
-            if( empty($sanitizedData["attachments"]) ) {
+            if (empty($sanitizedData["attachments"])) {
 
-                if( 
+                if ( 
                     !empty($sanitizedData["message_id"]) &&
                     !empty($sanitizedData["name"]) &&
                     !empty($sanitizedData["email"]) &&
@@ -70,11 +70,11 @@
 
             } else {
 
-                for( $i = 0; $i < count($sanitizedData["attachments"]); $i++ ) {
+                for ($i = 0; $i < count($sanitizedData["attachments"]); $i++) {
 
                     $size = strlen($sanitizedData["attachments"][$i]);
 
-                    if( 
+                    if ( 
                         !empty($sanitizedData["message_id"]) &&
                         !empty($sanitizedData["name"]) &&
                         !empty($sanitizedData["email"]) &&
@@ -98,7 +98,6 @@
         }
 
         return false;
-
     }
 
     // Transform attachments data:
@@ -125,7 +124,7 @@
             // "svg" => "image/svg+xml" <-- removed because PHP MIME TYPE returned "image/svg" instead of "image/svg+xml"
         ];
         
-        for( $i = 0; $i < count($sanitizedData["attachments"]); $i++ ) {
+        for ($i = 0; $i < count($sanitizedData["attachments"]); $i++) {
 
             $decoded_attachment = base64_decode($sanitizedData["attachments"][$i]);
 
@@ -133,7 +132,7 @@
 
             $detected_format = $finfo->buffer($decoded_attachment);
 
-            if(in_array($detected_format, $allowed_files_formats)) {
+            if (in_array($detected_format, $allowed_files_formats)) {
 
                 $filename = $sanitizedData["name"] . "_" . $sanitizedData["subject"] . "_" . bin2hex(random_bytes(1));
 
@@ -143,15 +142,13 @@
 
                 $temp = file_put_contents( $file_dir, $decoded_attachment );
                 
-                if( $temp ) {
+                if ($temp) {
 
                     $finfo = finfo_open(FILEINFO_NONE);
                     $tempFile = finfo_file( $finfo, $file_dir );
-
                 }
             }
                 
-            
             $sanitizedData["attachments"][$i] = $file_dir;
         }
         
@@ -159,11 +156,11 @@
     }
 
 
-    if( $_SERVER["REQUEST_METHOD"] === "POST") {
+    if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         $adminId = $model->routeRequireValidation();
 
-        $admin = $findAdmin->adminInfo( $adminId );
+        $admin = $findAdmin->adminInfo($adminId);
         
         $data = json_decode(file_get_contents("php://input"), TRUE);
 
@@ -171,17 +168,16 @@
 
         $transformedData = attachmentsTransformation($sanitizedData);
 
-        if(  validate( $sanitizedData )  && !empty( $admin ) ) {
+        if (validate($sanitizedData)  && !empty($admin)) {
 
-            $sentEmail = $model->sendEmail( $admin, $transformedData );
+            $sentEmail = $model->sendEmail($admin, $transformedData);
             
-            foreach( $transformedData["attachments"] as $attachments ) {
+            foreach ($transformedData["attachments"] as $attachments) {
 
-                unlink( $attachments );
-
+                unlink($attachments);
             }
 
-            if( $sentEmail ) {
+            if ($sentEmail) {
 
                 http_response_code(202);
                 die('{"message":"Email sent with success"}');
@@ -196,14 +192,10 @@
 
             http_response_code(400);
             die('{"message":"Wrong Information"}');
-        }
-
-
-        
+        } 
 
     } else {
 
         http_response_code(405);
         die('{"message": "Method Not Allowed"}');
-
     }

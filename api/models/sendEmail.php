@@ -11,7 +11,7 @@
 
     class Email extends Config {
 
-        public function sendEMail( $admin, $data ) {
+        public function sendEMail($admin, $data) {
 
             $mail = new PHPMailer();
 
@@ -34,24 +34,23 @@
             $mail->Password = getenv('MAIL_PASS'); 
 
             
-            $mail->setFrom( $admin[0]["email"], 'Ilhéu Atelier' );
+            $mail->setFrom($admin[0]["email"], 'Ilhéu Atelier');
 
-            $mail->addAddress( $data["email"], $data["name"] );
+            $mail->addAddress($data["email"], $data["name"]);
 
-            $mail->addReplyTo( $admin[0]["email"], 'Ilhéu Atelier' );
+            $mail->addReplyTo($admin[0]["email"], 'Ilhéu Atelier');
 
             $mail->Subject = $data["subject"];
 
-            $mail->msgHTML( $data["message"] );
+            $mail->msgHTML($data["message"]);
 
-            for( $i= 0; $i < count($data["attachments"]); $i++ ) { 
+            for ($i= 0; $i < count($data["attachments"]); $i++) { 
 
-                $mail->addAttachment( $data["attachments"][$i] );
+                $mail->addAttachment($data["attachments"][$i]);
                 
             }
             
-
-            if(!$mail->send()) {
+            if (!$mail->send()) {
 
                 echo 'Mailer Error: ' . $email->ErrorInfo;
                 return false;
@@ -59,7 +58,6 @@
             } else {
 
                 return true;
-                
             }
         }
     }

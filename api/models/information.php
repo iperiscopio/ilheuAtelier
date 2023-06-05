@@ -14,11 +14,11 @@
 
             $query->execute();
 
-            return $query->fetchAll( PDO::FETCH_ASSOC );
+            return $query->fetchAll(PDO::FETCH_ASSOC);
         }
 
 
-        public function getInfo( $id ) {
+        public function getInfo($id) {
 
             $query = $this->db->prepare("
                 SELECT
@@ -27,12 +27,12 @@
                 WHERE info_id = ?
             ");
 
-            $query->execute([ $id ]);
+            $query->execute([$id]);
 
             return $query->fetch();
         }
 
-        public function postInfo( $info ) {
+        public function postInfo($info) {
 
             $query = $this->db->prepare("
                 INSERT INTO information
@@ -47,10 +47,9 @@
             ]);
 
             return $this->db->lastInsertId();
-
         }
 
-        public function updateInfo( $id, $info ) {
+        public function updateInfo($id, $info) {
 
             $query = $this->db->prepare("
                 UPDATE information
@@ -71,7 +70,7 @@
 
         }
 
-        public function deleteInfo( $id ) {
+        public function deleteInfo($id) {
 
             $query = $this->db->prepare("
                 DELETE FROM information
@@ -79,9 +78,8 @@
                     info_id = ?
             ");
 
-            $id = $query->execute([ $id ]);
+            $id = $query->execute([$id]);
 
             return $id;
-
         }
     }

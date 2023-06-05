@@ -34,7 +34,7 @@
 
     $id = !empty($url_parts[3]) ? $url_parts[3] : "";
 
-    if( !in_array($controller, $controllers) ) {
+    if (!in_array($controller, $controllers)) {
         http_response_code(400);
         die('{"message": "rota inválida"}');
     }

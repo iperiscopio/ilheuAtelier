@@ -6,12 +6,12 @@
     $model = new Captcha();
     $client = new ClientsMessages();
 
-    function validate( $data ) {
-        foreach( $data as $key => $value) {
+    function validate($data) {
+        foreach ($data as $key => $value) {
             $key = trim(htmlspecialchars(strip_tags($value)));
         }
 
-        if(
+        if (
             !empty($data) &&
             isset($data["name"]) &&
             isset($data["email"]) &&
@@ -33,39 +33,34 @@
         return false;
     }
 
-
-    if( $_SERVER["REQUEST_METHOD"] === "GET" ) {
+    if ($_SERVER["REQUEST_METHOD"] === "GET") {
 
         $userIp = $_SERVER['HTTP_X_FORWARDED_FOR'];
 
         http_response_code(202);
 
         echo json_encode($model->newCaptcha($userIp));
-        
 
-
-    } else if( $_SERVER["REQUEST_METHOD"] === "POST" ){
+    } else if ($_SERVER["REQUEST_METHOD"] === "POST"){
 
         $userIp = $_SERVER['HTTP_X_FORWARDED_FOR'];
 
-        $data = json_decode( file_get_contents("php://input"), true );
+        $data = json_decode(file_get_contents("php://input"), true);
         
-        if( validate( $data ) ) {
+        if (validate($data)) {
 
-            $validCaptcha = $model->matched( $userIp, $data["captcha"] );
+            $validCaptcha = $model->matched($userIp, $data["captcha"]);
 
-            if( $validCaptcha ) {
+            if ($validCaptcha) {
 
                 http_response_code(202);
-                $client->createMessage( $data );
+                $client->createMessage($data);
                 
             } else {
 
                 http_response_code(400);
                 die('{"message":"Ooops wrong captcha or information not filled correctly"}');
-
             }
-
 
         } else {
 
@@ -73,12 +68,9 @@
             die('{"message":"Bad Request. Information not filled correctly"}');
         }
 
-
-
     } else {
 
         http_response_code(405);
         die('{"message": "Method Not Allowed"}');
-
     }
 ?>

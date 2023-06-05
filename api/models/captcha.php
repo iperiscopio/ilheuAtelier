@@ -4,15 +4,15 @@
 
     class Captcha extends Config {
 
-        public function newCaptcha( $user_ip ) {
+        public function newCaptcha($user_ip) {
             $query = $this->db->prepare("
                 DELETE FROM captchas
                 WHERE ip = ?
             ");
 
-            $deletedIp = $query->execute([ $user_ip ]);
+            $deletedIp = $query->execute([$user_ip]);
 
-            if($deletedIp) {
+            if ($deletedIp) {
                 header("Content-Type: image/png");
 
                 $image = imagecreate(117, 60);
@@ -28,7 +28,6 @@
                 $newCaptcha = $text;
 
                 imagettftext($image, 20, 5, 17, 41, $black, $font, $text);
-
             
                 $query = $this->db->prepare("
                     INSERT INTO captchas
@@ -46,12 +45,12 @@
                 // Capture the output and clear the output buffer
                 $imagedata = ob_get_clean();
 
-                return [ 'captcha' => base64_encode($imagedata)];
+                return ['captcha' => base64_encode($imagedata)];
             }
             
         }
 
-        public function matched( $user_ip, $user_captcha ) {
+        public function matched($user_ip, $user_captcha) {
 
             $query = $this->db->prepare("
                 SELECT
@@ -67,11 +66,13 @@
                 $user_captcha,
             ]);
             
-            $matched = $query->fetch( PDO::FETCH_ASSOC );
+            $matched = $query->fetch(PDO::FETCH_ASSOC);
 
-            if( $matched ) {
+            if ($matched) {
+                
                 return true;
             }
+
             return false;
         }
     }

@@ -27,7 +27,7 @@
                 $data[$key] = trim(htmlspecialchars(strip_tags($value)));
             }
 
-            if( 
+            if ( 
                 !empty($data["title"]) &&
                 !empty($data["info"]) &&
                 !empty($data["info_en"]) &&

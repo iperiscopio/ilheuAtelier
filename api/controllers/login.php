@@ -7,14 +7,14 @@
     $model = new Admin();
 
     // Validation:
-    function validateLogin( $data ) {
+    function validateLogin($data) {
         
         // sanitization:
-        foreach($data as $key => $value) {
+        foreach ($data as $key => $value) {
             $data[$key] = trim(htmlspecialchars(strip_tags($value)));
         }
 
-        if( 
+        if ( 
             !empty($data) &&
             !empty($data["email"]) &&
             !empty($data["password"]) &&
@@ -29,20 +29,20 @@
         return false;
     }
 
-    if( $_SERVER["REQUEST_METHOD"] === "POST") {
+    if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
-        $data = json_decode( file_get_contents("php://input"), true );
+        $data = json_decode(file_get_contents("php://input"), true);
 
-        if( validateLogin( $data ) ) {
+        if (validateLogin($data)) {
             
             $admin = $model->login($data);
 
-            if(empty( $admin )) {
+            if (empty($admin)) {
+
                 http_response_code(422);
                 die('{"message":"Invalid email or password"}');
             }
             
-
             // criar jwt
             $payload = [
                 "adminId" => $admin["admin_id"],
@@ -55,7 +55,6 @@
             $secret = getenv('SECRET_KEY');
 
             $token = Token::customPayload($payload, $secret);
-
             
             header("X-Auth-Token: " . $token);
             
@@ -74,8 +73,6 @@
             die('{"message":"Wrong information"}');
         }
         
-        
-
     } else {
 
         http_response_code(405);

@@ -34,13 +34,13 @@
             
             $headers = apache_request_headers();
 
-            foreach($headers as $header => $value) {
-                if( strtolower($header) === "x-auth-token" ) {
+            foreach ($headers as $header => $value) {
+                if (strtolower($header) === "x-auth-token") {
                     $token = trim( $value );
                 }
             }
 
-            if( empty($token) ) {
+            if (empty($token)) {
                 http_response_code(401);
                 die('{"message":"User not authenticated. Not allowed to perform this action"}');
             }
@@ -50,15 +50,14 @@
             
             $isValid = Token::validate($token, $secret);
             
-            if($isValid) {
+            if ($isValid) {
                 $admin = Token::getPayload($token, $secret);
             }
             
-            if( isset($admin) ) { 
+            if (isset($admin)) { 
                 return $admin["adminId"];
             }
 
             return 0;
         }
-
     }
