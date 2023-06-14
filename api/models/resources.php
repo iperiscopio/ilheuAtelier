@@ -10,6 +10,7 @@
 
             if ($lang === 'pt-PT') {
                 var_dump('entrou');
+                var_dump(parse_ini_file(__DIR__ . '/../Resources_PT.ini'));
                 
                 return parse_ini_file(__DIR__ . '/../Resources_PT.ini');
 

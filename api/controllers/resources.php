@@ -15,6 +15,8 @@
 
             http_response_code(202);
 
+            var_dump(json_encode($resource->getResource($id)));
+
             echo json_encode($resource->getResource($id));
         }
     } else {
