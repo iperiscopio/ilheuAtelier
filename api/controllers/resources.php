@@ -15,7 +15,7 @@
 
             http_response_code(202);
 
-            print_r(json_encode($resource->getResource($id)));
+            print_r($resource->getResource($id));
 
             echo json_encode($resource->getResource($id));
         }
