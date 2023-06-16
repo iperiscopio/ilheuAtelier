@@ -5,9 +5,7 @@
     class Resources extends Config {
         
         public function getResource($lang) {
-
-            var_dump($lang);
-
+            
             if ($lang === 'pt-PT') {
                 
                 return parse_ini_file(__DIR__ . '/../Resources_PT.ini');
