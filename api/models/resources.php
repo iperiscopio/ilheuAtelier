@@ -12,7 +12,7 @@
 
             } else if ($lang === 'en-GB') {
 
-                return parse_ini_file(__DIR__ . '/../Resources_EN.ini');
+                return parse_ini_file(__DIR__ . '/../Resources_EN.ini', false, INI_SCANNER_RAW);
             }
         }
     }
