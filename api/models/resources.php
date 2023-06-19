@@ -8,7 +8,7 @@
             
             if ($lang === 'pt-PT') {
                 
-                return parse_ini_file(__DIR__ . '/../Resources_PT.ini');
+                return parse_ini_file(__DIR__ . '/../Resources_PT.ini', false, INI_SCANNER_RAW);
 
             } else if ($lang === 'en-GB') {
 
