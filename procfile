@@ -1,1 +1,1 @@
-web: heroku-php-apache2 -i public/.user.ini -F php-fpm.conf public/
+web: heroku-php-apache2 -i .user.ini -F php-fpm.conf
