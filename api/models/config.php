@@ -13,20 +13,24 @@
 
         public function __construct() {
 
-            $DB_HOST = getenv('DB_HOST');
-            $DB_NAME = getenv('DB_NAME');
-            $DB_CHARSET = getenv('DB_CHARSET');
-            $DB_USER = getenv('DB_USER');
-            $DB_PASS = getenv('DB_PASS');
-            
-            $this->db = new PDO( 
-                'mysql' . 
-                ':host=' . $DB_HOST . 
-                ';dbname='  . $DB_NAME .
-                ';charset=' . $DB_CHARSET ,
-                $DB_USER ,  
-                $DB_PASS
-            );
+            try {
+                $DB_HOST = getenv('DB_HOST');
+                $DB_NAME = getenv('DB_NAME');
+                $DB_CHARSET = getenv('DB_CHARSET');
+                $DB_USER = getenv('DB_USER');
+                $DB_PASS = getenv('DB_PASS');
+                
+                $this->db = new PDO( 
+                    'mysql' . 
+                    ':host=' . $DB_HOST . 
+                    ';dbname='  . $DB_NAME .
+                    ';charset=' . $DB_CHARSET ,
+                    $DB_USER ,  
+                    $DB_PASS
+                );
+            } catch (PDOException $e) {
+                die('Database connection failed: ' . $e->getMessage());
+            }
         }
 
         // admin validation 
