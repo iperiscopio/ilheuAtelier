@@ -33,6 +33,9 @@
     $controller = $url_parts[2];
 
     $id = !empty($url_parts[3]) ? $url_parts[3] : "";
+    print_r($url_parts[1]);
+    print_r($url_parts[2]);
+    print_r($url_parts[3]);
 
     if (!in_array($controller, $controllers)) {
         http_response_code(400);
