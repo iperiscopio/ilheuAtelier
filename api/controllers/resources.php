@@ -1,10 +1,12 @@
 <?php
 
     require("models/resources.php");
+    print_r("resources controller");
 
     $resource = new Resources();
 
     if ($_SERVER["REQUEST_METHOD"] === "GET") {   
+        print_r($id);
 
         if (empty($id)) {
 

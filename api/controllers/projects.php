@@ -4,6 +4,8 @@
 
     $model = new Project();
 
+    print_r("projects controller");
+
 
     if ($_SERVER["REQUEST_METHOD"] === "GET") {
 

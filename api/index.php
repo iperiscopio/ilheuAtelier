@@ -13,14 +13,9 @@
         )
     );
 
-    // $url_parts = explode("/", $_SERVER["REQUEST_URI"]);
-    // print_r("url_parts");
-    // print_r($url_parts);
-
-    $url_path = parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
-    print_r("url_path");
-    print_r($url_path);
-    $url_parts = array_filter(explode("/", $url_path));
+    $url_parts = explode("/", $_SERVER["REQUEST_URI"]);
+    print_r("url_parts");
+    print_r($url_parts);
     
     $controllers = [
         "accounts-manager",
