@@ -31,7 +31,7 @@
         "siteImages",
         "sendEmail"
     ];
-
+    print_r($controllers);
     $controller = $url_parts[2];
 
     $id = !empty($url_parts[3]) ? $url_parts[3] : "";
