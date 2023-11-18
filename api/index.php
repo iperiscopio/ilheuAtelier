@@ -32,6 +32,16 @@
         "sendEmail"
     ];
     print_r($controllers);
+    $DB_HOST = getenv('DB_HOST');
+    $DB_NAME = getenv('DB_NAME');
+    $DB_CHARSET = getenv('DB_CHARSET');
+    $DB_USER = getenv('DB_USER');
+    $DB_PASS = getenv('DB_PASS');
+    print_r($DB_HOST);
+    print_r($DB_NAME);
+    print_r($DB_CHARSET);
+    print_r($DB_USER);
+    print_r($DB_PASS);
     $controller = $url_parts[2];
 
     $id = !empty($url_parts[3]) ? $url_parts[3] : "";
