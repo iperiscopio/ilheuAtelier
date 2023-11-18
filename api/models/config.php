@@ -1,6 +1,7 @@
 <?php
 
     use ReallySimpleJWT\Token;
+    require_once '../../pdoconfig.php';
 
     class Config {
 
@@ -15,13 +16,6 @@
         public function __construct() {
 
             try {
-                $DB_CONNECTION = CONFIG["DB_CONNECTION"];
-                $DB_HOST = CONFIG["DB_HOST"];
-                $DB_NAME = CONFIG["DB_NAME"];
-                $DB_CHARSET = CONFIG["DB_CHARSET"];
-                $DB_USER = CONFIG["DB_USER"];
-                $DB_PASS = CONFIG["DB_PASS"];
-                
                 $this->db = new PDO( 
                     $DB_CONNECTION . 
                     ':host=' . $DB_HOST . 
