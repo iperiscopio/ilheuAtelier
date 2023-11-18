@@ -1,7 +1,7 @@
 <?php
 
     use ReallySimpleJWT\Token;
-    require_once '../../pdoconfig.php';
+    require_once 'pdoconfig.php';
 
     class Config {
 
