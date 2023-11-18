@@ -5,6 +5,7 @@
     class Config {
 
         protected $db;
+        protected $DB_CONNECTION;
         protected $DB_HOST;
         protected $DB_NAME;
         protected $DB_CHARSET;
@@ -14,14 +15,15 @@
         public function __construct() {
 
             try {
-                $DB_HOST = getenv('DB_HOST');
-                $DB_NAME = getenv('DB_NAME');
-                $DB_CHARSET = getenv('DB_CHARSET');
-                $DB_USER = getenv('DB_USER');
-                $DB_PASS = getenv('DB_PASS');
+                $DB_CONNECTION = CONFIG["DB_CONNECTION"];
+                $DB_HOST = CONFIG["DB_HOST"];
+                $DB_NAME = CONFIG["DB_NAME"];
+                $DB_CHARSET = CONFIG["DB_CHARSET"];
+                $DB_USER = CONFIG["DB_USER"];
+                $DB_PASS = CONFIG["DB_PASS"];
                 
                 $this->db = new PDO( 
-                    'mysql' . 
+                    $DB_CONNECTION . 
                     ':host=' . $DB_HOST . 
                     ';dbname='  . $DB_NAME .
                     ';charset=' . $DB_CHARSET ,
