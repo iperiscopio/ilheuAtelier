@@ -1,6 +1,7 @@
 <?php
 
     use ReallySimpleJWT\Token;
+    require_once('configvars.php');
 
     class Config {
 
