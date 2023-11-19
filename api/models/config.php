@@ -1,7 +1,7 @@
 <?php
 
     use ReallySimpleJWT\Token;
-    require_once('configvars.php');
+    require_once("configvars.php");
 
     class Config {
 
@@ -20,9 +20,13 @@
             $DB_USER = getenv('DB_USER');
             $DB_PASS = getenv('DB_PASS');
 
+            print_r("DB_HOST");
             print_r($DB_HOST);
+            print_r("DB_NAME");
             print_r($DB_NAME);
+            print_r("DB_USER");
             print_r($DB_USER);
+            print_r("DB_PASS");
             print_r($DB_PASS);
 
             $this->db = new PDO( 
