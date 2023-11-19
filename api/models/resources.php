@@ -1,18 +1,21 @@
 <?php
 
-    require_once("config.php");
-
-    class Resources extends Config {
+    class Resources {
         
-        public function getResource($lang) {
-            
-            if ($lang === 'pt-PT') {
-                
-                return parse_ini_file(__DIR__ . '/../Resources_PT.ini', false, INI_SCANNER_RAW);
+       private $resources;
 
-            } else if ($lang === 'en-GB') {
+       public function getResource($lang) {
+           if (!$this->resources) {
+               $this->loadResources();
+           }
 
-                return parse_ini_file(__DIR__ . '/../Resources_EN.ini', false, INI_SCANNER_RAW);
-            }
-        }
+           return $this->resources[$lang] ?? [];
+       }
+
+       private function loadResources() {
+           $this->resources = [
+               'pt-PT' => parse_ini_file(__DIR__ . '/../Resources_PT.ini', false, INI_SCANNER_RAW),
+               'en-GB' => parse_ini_file(__DIR__ . '/../Resources_EN.ini', false, INI_SCANNER_RAW),
+           ];
+       }
     }

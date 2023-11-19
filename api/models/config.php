@@ -29,14 +29,18 @@
             print_r("DB_PASS");
             print_r($DB_PASS);
 
-            $this->db = new PDO( 
-                'mysql' . 
-                ':host=' . $DB_HOST . 
-                ';dbname='  . $DB_NAME .
-                ';charset=' . $DB_CHARSET ,
-                $DB_USER ,  
-                $DB_PASS
-            );
+            try {
+                $this->db = new PDO(
+                    $DB_CONNECTION .
+                    ':host=' . $DB_HOST .
+                    ';dbname='  . $DB_NAME .
+                    ';charset=' . $DB_CHARSET ,
+                    $DB_USER ,
+                    $DB_PASS
+                );
+            } catch (PDOException $e) {
+                die('Database connection failed: ' . $e->getMessage());
+            }
         }
 
         // admin validation 
