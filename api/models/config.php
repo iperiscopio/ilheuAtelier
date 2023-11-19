@@ -19,7 +19,12 @@
             $DB_CHARSET = getenv('DB_CHARSET');
             $DB_USER = getenv('DB_USER');
             $DB_PASS = getenv('DB_PASS');
-            
+
+            print_r($DB_HOST);
+            print_r($DB_NAME);
+            print_r($DB_USER);
+            print_r($DB_PASS);
+
             $this->db = new PDO( 
                 'mysql' . 
                 ':host=' . $DB_HOST . 
