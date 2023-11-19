@@ -8,6 +8,7 @@ deployment:
     - /bin/cp -R vendor $DEPLOYPATH
     - /bin/cp composer.lock $DEPLOYPATH
     - /bin/cp composer.json $DEPLOYPATH
+    - /bin/cp .htaccess $DEPLOYPATH
     - /bin/cp atipland-book.2f8c00bc2473de3a.woff $DEPLOYPATH
     - /bin/cp atipland-book.4dca1c08ded56b6b.ttf $DEPLOYPATH
     - /bin/cp atipland-book.8df6297e63d68d30.woff2 $DEPLOYPATH
