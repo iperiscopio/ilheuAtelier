@@ -8,11 +8,11 @@ deployment:
     - /bin/cp -R vendor $DEPLOYPATH
     - /bin/cp composer.lock $DEPLOYPATH
     - /bin/cp composer.json $DEPLOYPATH
-    #- /bin/cp atipland-book.2f8c00bc2473de3a.woff $DEPLOYPATH
-    #- /bin/cp atipland-book.4dca1c08ded56b6b.ttf $DEPLOYPATH
-    #- /bin/cp atipland-book.8df6297e63d68d30.woff2 $DEPLOYPATH
-    #- /bin/cp atipland-book.37516cee1d5d1008.eot $DEPLOYPATH
-    #- /bin/cp atipland-book.cedea9a46d57577b.otf $DEPLOYPATH
+    - /bin/cp atipland-book.2f8c00bc2473de3a.woff $DEPLOYPATH
+    - /bin/cp atipland-book.4dca1c08ded56b6b.ttf $DEPLOYPATH
+    - /bin/cp atipland-book.8df6297e63d68d30.woff2 $DEPLOYPATH
+    - /bin/cp atipland-book.37516cee1d5d1008.eot $DEPLOYPATH
+    - /bin/cp atipland-book.cedea9a46d57577b.otf $DEPLOYPATH
     - /bin/cp favicon.ico $DEPLOYPATH
     - /bin/cp polyfills.078f3aefb6bb3da7.js $DEPLOYPATH
     - /bin/cp runtime.31022f6d7dafc1c1.js $DEPLOYPATH
