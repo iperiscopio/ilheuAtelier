@@ -15,6 +15,9 @@ deployment:
     - /bin/cp atipland-book.37516cee1d5d1008.eot $DEPLOYPATH
     - /bin/cp atipland-book.cedea9a46d57577b.otf $DEPLOYPATH
     - /bin/cp favicon.ico $DEPLOYPATH
+    - /bin/cp polyfills.078f3aefb6bb3da7.js $DEPLOYPATH
+    - /bin/cp runtime.31022f6d7dafc1c1.js $DEPLOYPATH
+    - /bin/cp styles.60116a0b47ea74ec.css $DEPLOYPATH
     - /bin/cp index.php $DEPLOYPATH
-    - /bin/cp style.css $DEPLOYPATH
-    - /bin/cp main.js $DEPLOYPATH
+    - /bin/cp main.12619183ddbc26b9.js $DEPLOYPATH
+    - /bin/cp procfile $DEPLOYPATH
