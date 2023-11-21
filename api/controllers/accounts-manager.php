@@ -2,8 +2,8 @@
 
     use ReallySimpleJWT\Token;
 
-    require("models/admin.php");
-    require("models/stats.php");
+    require(dirname(__DIR__, 1) . '/models/admin.php');
+    require(dirname(__DIR__, 1) . '/models/stats.php');
 
     $model = new Admin();
     $stats = new Stats();

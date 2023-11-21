@@ -2,8 +2,8 @@
 
     use ReallySimpleJWT\Token;
 
-    require("models/admin.php");
-    require("models/sendEmail.php");
+    require(dirname(__DIR__, 1) . '/models/admin.php');
+    require(dirname(__DIR__, 1) . '/models/sendEmail.php');
 
     $model = new Email();
     $findAdmin = new Admin();

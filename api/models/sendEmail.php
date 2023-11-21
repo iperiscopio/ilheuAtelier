@@ -4,14 +4,16 @@
     use PHPMailer\PHPMailer\Exception;
     use PHPMailer\PHPMailer\SMTP;
 
-    require("vendor/phpmailer/phpmailer/src/Exception.php");
-    require("vendor/phpmailer/phpmailer/src/PHPMailer.php");
-    require("vendor/phpmailer/phpmailer/src/SMTP.php");
-    require_once("config.php");
+    require(dirname(__DIR__) . '/vendor/phpmailer/phpmailer/src/Exception.php');
+    require(dirname(__DIR__) . '/vendor/phpmailer/phpmailer/src/PHPMailer.php');
+    require(dirname(__DIR__) . '/vendor/phpmailer/phpmailer/src/SMTP.php');
+    require_once(dirname(__DIR__) . '/models/config.php');
+    $config = include(dirname(__DIR__, 2) . '/configvars.php');
 
     class Email extends Config {
 
         public function sendEMail($admin, $data) {
+            global $config;
 
             $mail = new PHPMailer();
 
@@ -28,10 +30,10 @@
             
             $mail->CharSet = 'UTF-8';
             
-            $mail->Host = getenv('MAIL_HOST');
-            $mail->Port = getenv('MAIL_PORT');
-            $mail->Username = getenv('MAIL_USERNAME');
-            $mail->Password = getenv('MAIL_PASS'); 
+            $mail->Host = $config['MAIL_HOST'];
+            $mail->Port = $config['MAIL_PORT'];
+            $mail->Username = $config['MAIL_USERNAME'];
+            $mail->Password = $config['MAIL_PASS'];
 
             
             $mail->setFrom($admin[0]["email"], 'Ilhéu Atelier');

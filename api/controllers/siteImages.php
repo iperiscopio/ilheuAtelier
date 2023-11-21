@@ -1,6 +1,6 @@
 <?php
 
-    require("models/siteImage.php");
+    require(dirname(__DIR__, 1) . '/models/siteImage.php');
 
     $model = new SiteImage();
 

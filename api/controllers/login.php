@@ -2,12 +2,15 @@
 
     use ReallySimpleJWT\Token;
 
-    require("models/admin.php");
+    require(dirname(__DIR__, 1) . '/models/admin.php');
+    $config = include(dirname(__DIR__, 2) . '/configvars.php');
 
     $model = new Admin();
 
     // Validation:
     function validateLogin($data) {
+
+        global $config;
         
         // sanitization:
         foreach ($data as $key => $value) {
@@ -52,9 +55,9 @@
                 "exp" => time() + (60 * 120) // 2 hours
             ];
 
-            $secret = getenv('SECRET_KEY');
+            $this->SECRET = $config['SECRET_PASS'];
 
-            $token = Token::customPayload($payload, $secret);
+            $token = Token::customPayload($payload, $this->SECRET);
             
             header("X-Auth-Token: " . $token);
             

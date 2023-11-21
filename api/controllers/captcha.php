@@ -1,7 +1,7 @@
 <?php
 
-    require("models/captcha.php");
-    require("models/clientsMessages.php");
+    require(dirname(__DIR__, 1) . '/models/captcha.php');
+    require(dirname(__DIR__, 1) . '/models/clientsMessages.php');
 
     $model = new Captcha();
     $client = new ClientsMessages();

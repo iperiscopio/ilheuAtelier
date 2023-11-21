@@ -2,7 +2,7 @@
 
     use ReallySimpleJWT\Token;
 
-    require("models/clientsMessages.php");
+    require(dirname(__DIR__, 1) . '/models/clientsMessages.php');
 
     $model = new ClientsMessages();
 

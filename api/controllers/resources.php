@@ -1,6 +1,6 @@
 <?php
 
-    require("models/resources.php");
+    require(dirname(__DIR__, 1) . '/models/resources.php');
 
     $resource = new Resources();
 

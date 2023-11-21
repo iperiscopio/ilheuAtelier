@@ -1,7 +1,7 @@
 <?php
 
     use ReallySimpleJWT\Token;
-    require_once("configvars.php");
+    $config = include(dirname(__DIR__, 2) . '/configvars.php');
 
     class Config {
 
@@ -13,30 +13,22 @@
         protected $DB_PASS;
 
         public function __construct() {
+            global $config;
 
-            $DB_HOST = getenv('DB_HOST');
-            $DB_NAME = getenv('DB_NAME');
-            $DB_CHARSET = getenv('DB_CHARSET');
-            $DB_USER = getenv('DB_USER');
-            $DB_PASS = getenv('DB_PASS');
-
-            print_r("DB_HOST");
-            print_r($DB_HOST);
-            print_r("DB_NAME");
-            print_r($DB_NAME);
-            print_r("DB_USER");
-            print_r($DB_USER);
-            print_r("DB_PASS");
-            print_r($DB_PASS);
+            $this->DB_HOST = $config['DB_HOST'];
+            $this->DB_NAME = $config['DB_NAME'];
+            $this->DB_CHARSET = $config['DB_CHARSET'];
+            $this->DB_USER = $config['DB_USER'];
+            $this->DB_PASS = $config['DB_PASS'];
 
             try {
                 $this->db = new PDO(
-                    $DB_CONNECTION .
-                    ':host=' . $DB_HOST .
-                    ';dbname='  . $DB_NAME .
-                    ';charset=' . $DB_CHARSET ,
-                    $DB_USER ,
-                    $DB_PASS
+                    'mysql' .
+                    ':host=' . $this->DB_HOST .
+                    ';dbname='  . $this->DB_NAME .
+                    ';charset=' . $this->DB_CHARSET ,
+                    $this->DB_USER ,
+                    $this->DB_PASS
                 );
             } catch (PDOException $e) {
                 die('Database connection failed: ' . $e->getMessage());
@@ -45,6 +37,8 @@
 
         // admin validation 
         public function routeRequireValidation() {
+
+            global $config;
             
             $headers = apache_request_headers();
 
@@ -60,12 +54,12 @@
             }
 
             // Token validation
-            $secret = getenv('SECRET_KEY');;
+            $this->SECRET = $config['SECRET_PASS'];
             
-            $isValid = Token::validate($token, $secret);
+            $isValid = Token::validate($token, $this->SECRET);
             
             if ($isValid) {
-                $admin = Token::getPayload($token, $secret);
+                $admin = Token::getPayload($token, $this->SECRET);
             }
             
             if (isset($admin)) { 
