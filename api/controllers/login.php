@@ -55,9 +55,9 @@
                 "exp" => time() + (60 * 120) // 2 hours
             ];
 
-            $this->SECRET = $config['SECRET_PASS'];
+            $SECRET = $config['SECRET_KEY'];
 
-            $token = Token::customPayload($payload, $this->SECRET);
+            $token = Token::customPayload($payload, $SECRET);
             
             header("X-Auth-Token: " . $token);
             
