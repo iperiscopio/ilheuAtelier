@@ -54,12 +54,12 @@
             }
 
             // Token validation
-            $this->SECRET = $config['SECRET_PASS'];
+            $SECRET = $config['SECRET_KEY'];
             
-            $isValid = Token::validate($token, $this->SECRET);
+            $isValid = Token::validate($token, $SECRET);
             
             if ($isValid) {
-                $admin = Token::getPayload($token, $this->SECRET);
+                $admin = Token::getPayload($token, $SECRET);
             }
             
             if (isset($admin)) { 
